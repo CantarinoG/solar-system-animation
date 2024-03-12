@@ -4,12 +4,13 @@ let renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-const texture = new THREE.TextureLoader().load("./assets/galaxy.jpg");
+const textureGalaxy = new THREE.TextureLoader().load("./assets/galaxy.jpg");
+const texturePlanet = new THREE.TextureLoader().load("./assets/planet.jpg");
 
 let sphereGeometry = new THREE.SphereGeometry();
-let materialPlanet = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+let materialPlanet = new THREE.MeshBasicMaterial({ map: texturePlanet });
 let materialSun = new THREE.MeshBasicMaterial({ color: 0xDECB3D });
-let materialGalaxy = new THREE.MeshBasicMaterial({ map: texture, side: THREE.BackSide });
+let materialGalaxy = new THREE.MeshBasicMaterial({ map: textureGalaxy, side: THREE.BackSide });
 
 
 let planet = new THREE.Mesh(sphereGeometry, materialPlanet);
@@ -34,10 +35,10 @@ camera.lookAt(scene.position);
 function animate() {
     requestAnimationFrame(animate);
 
-    sun.rotation.x += 0.1
+    sun.rotation.y += 0.04
     planet.position.x = Math.cos(Date.now() * 0.002) * 15
     planet.position.y = Math.sin(Date.now() * 0.002) * 15 / 2
-    planet.rotation.x += 0.1
+    planet.rotation.y += 0.04
 
     renderer.render(scene, camera);
 }
